@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0b0b0b;
+  color: white;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 8vw;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url("assets/images/hero-poster.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.65),
+      rgba(0,0,0,0.15)
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 850px;
+}
+
+.portfolio-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+
+  letter-spacing: -0.04em;
+}
+
+.hero-subtitle {
+  margin-top: 30px;
+
+  max-width: 600px;
+
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.hero-meta {
+  margin-top: 20px;
+
+  font-size: 0.9rem;
+
+  opacity: 0.8;
+}
+
+.hero-button {
+  display: inline-block;
+
+  margin-top: 40px;
+
+  padding-bottom: 5px;
+
+  color: white;
+  text-decoration: none;
+
+  border-bottom: 1px solid white;
+
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+
+  font-size: 0.8rem;
+}
+
+.journey {
+  max-width: 1000px;
+
+  margin: auto;
+
+  padding: 120px 30px;
+}
+
+.journey > p:first-child {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+
+  margin-bottom: 25px;
+}
+
+.journey h2 {
+  max-width: 800px;
+
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.1;
+
+  margin-bottom: 40px;
+}
+
+.journey p:last-child {
+  line-height: 2;
+
+  opacity: 0.75;
+}
+
+@media (max-width: 700px) {
+
+  .hero {
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+}
