@@ -33,11 +33,26 @@ body {
 
   background-size: cover;
   background-position: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
 
   background:
     linear-gradient(
@@ -140,11 +155,21 @@ h1 {
   }
 
   h1 {
-    font-size: 3.2rem;
+    font-size: clamp(2.3rem, 9vw, 3.2rem);
   }
 
   .hero-subtitle {
     font-size: 1rem;
   }
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-video {
+    display: none;
+  }
 }
