@@ -3,16 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const caption = document.querySelector(".location-caption");
   if (!video || !caption) return;
 
-  // Approximate percentages of the hero video's runtime.
-  // Adjust these cut points if the exported montage has different scene lengths.
+  // Exact scene intervals supplied by the filmmaker, in decimal seconds.
+  // Display no location name in the short transitions between clips.
   const locations = [
-    { start: 0.00, name: "SÃO PAULO, BRAZIL" },
-    { start: 0.13, name: "RIO DE JANEIRO, BRAZIL" },
-    { start: 0.30, name: "MONTEVIDEO, URUGUAY" },
-    { start: 0.42, name: "BUENOS AIRES, ARGENTINA" },
-    { start: 0.54, name: "USHUAIA, ARGENTINA" },
-    { start: 0.70, name: "BEAGLE CHANNEL, ARGENTINA" },
-    { start: 0.85, name: "IGUAZÚ FALLS, ARGENTINA / BRAZIL" }
+    { start: 0.10, end: 3.20, name: "SÃO PAULO, BRAZIL" },
+    { start: 3.40, end: 8.90, name: "RIO DE JANEIRO, BRAZIL" },
+    { start: 9.10, end: 9.80, name: "MONTEVIDEO, URUGUAY" },
+    { start: 10.00, end: 11.10, name: "PUNTA DEL ESTE, URUGUAY" },
+    { start: 11.30, end: 13.80, name: "BUENOS AIRES, ARGENTINA" },
+    { start: 13.90, end: 17.40, name: "LAGUNA ESMERALDA, ARGENTINA" },
+    { start: 17.60, end: 19.90, name: "BEAGLE CHANNEL, ARGENTINA" },
+    { start: 20.10, end: 24.10, name: "IGUAZÚ FALLS, BRAZIL & ARGENTINA" }
   ];
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -21,33 +22,57 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  let activeLocation = "";
-  let pendingTransition;
+  let activeIndex = -2;
+  let animationFrame = 0;
 
-  function updateLocation() {
-    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    const progress = video.currentTime / video.duration;
-    const current = locations.reduce(
-      (active, location) => progress >= location.start ? location : active,
-      locations[0]
+  function syncCaption() {
+    const time = video.currentTime;
+    const nextIndex = locations.findIndex(
+      ({ start, end }) => time >= start && time < end
     );
 
-    if (current.name === activeLocation) return;
-    activeLocation = current.name;
-    caption.classList.remove("is-visible");
-    window.clearTimeout(pendingTransition);
+    if (nextIndex === activeIndex) return;
+    activeIndex = nextIndex;
 
-    pendingTransition = window.setTimeout(() => {
-      caption.textContent = current.name;
-      caption.classList.add("is-visible");
-    }, 170);
+    if (nextIndex === -1) {
+      caption.classList.remove("is-visible");
+      return;
+    }
+
+    caption.textContent = locations[nextIndex].name;
+    caption.classList.add("is-visible");
   }
 
-  video.addEventListener("loadedmetadata", updateLocation);
-  video.addEventListener("timeupdate", updateLocation);
-  video.addEventListener("seeked", updateLocation);
-  video.addEventListener("playing", updateLocation);
+  // Check during each animation frame for accuracy, including very short scenes.
+  function trackPlayback() {
+    animationFrame = 0;
+    syncCaption();
+    if (!video.paused && !video.ended) {
+      animationFrame = window.requestAnimationFrame(trackPlayback);
+    }
+  }
 
-  // For cached video that has already loaded before script initialization.
-  if (video.readyState >= 1) updateLocation();
+  function startTracking() {
+    syncCaption();
+    if (!animationFrame) {
+      animationFrame = window.requestAnimationFrame(trackPlayback);
+    }
+  }
+
+  function stopTracking() {
+    if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    animationFrame = 0;
+    syncCaption();
+  }
+
+  video.addEventListener("loadedmetadata", syncCaption);
+  video.addEventListener("timeupdate", syncCaption);
+  video.addEventListener("seeking", syncCaption);
+  video.addEventListener("seeked", syncCaption);
+  video.addEventListener("playing", startTracking);
+  video.addEventListener("pause", stopTracking);
+  video.addEventListener("ended", stopTracking);
+
+  if (video.readyState >= 1) syncCaption();
+  if (!video.paused) startTracking();
 });
