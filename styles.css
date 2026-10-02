@@ -190,7 +190,7 @@ h1 {
   text-shadow: 0 2px 12px rgba(0,0,0,.75);
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity .45s ease, transform .45s ease;
+  transition: opacity .18s ease, transform .18s ease;
   pointer-events: none;
 }
 
