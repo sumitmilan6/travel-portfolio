@@ -383,3 +383,49 @@ h1 {
   .case-film-kicker { max-width: 65%; line-height: 1.5; }
   .case-film-caption { font-size: .61rem; }
 }
+
+/* Rio city photograph — visual pause after the Carnival film */
+.case-landscape {
+  margin: clamp(64px, 9vw, 132px) 0 0;
+}
+.case-landscape-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px 36px;
+  margin-bottom: 24px;
+}
+.case-landscape-heading span {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: #8f6a4e;
+}
+.case-landscape-heading p {
+  font: italic clamp(1.7rem, 3.3vw, 3.5rem)/1.1 Georgia, "Times New Roman", serif;
+  letter-spacing: -.035em;
+}
+.case-landscape-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  background: #c6c7bd;
+}
+.case-landscape figcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  line-height: 1.7;
+}
+@media (max-width: 600px) {
+  .case-landscape-image { aspect-ratio: 4 / 3; }
+  .case-landscape figcaption { font-size: .61rem; }
+}
