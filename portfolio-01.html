@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111616">
   <meta name="description" content="From Carnival to the End of the World: a five-week, four-country South American journey designed around a childhood dream of Brazilian Carnival.">
   <title>From Carnival to the End of the World | Portfolio 01</title>
-  <link rel="stylesheet" href="styles.css?v=portfolio01-20261002">
+  <link rel="stylesheet" href="styles.css?v=portfolio01-rio-film-20261003">
 </head>
 <body class="case-page">
   <a class="case-skip" href="#story">Skip to the story</a>
@@ -46,6 +46,18 @@
           <p>From there, the route moved south through Uruguay and Argentina, reaching Ushuaia for Patagonian hiking and a journey on the Beagle Channel, before turning north toward Iguazú Falls and a day across the border in Paraguay.</p>
         </div>
       </div>
+      <figure class="case-film" aria-label="Rio de Janeiro Carnival video">
+        <div class="case-film-frame">
+          <video id="carnival-film" class="case-film-video" muted loop playsinline preload="none" aria-label="A ten-second film from Carnival in Rio de Janeiro">
+            <source data-src="rio-carnival.mp4" type="video/mp4">
+            Your browser does not support embedded video.
+          </video>
+          <span class="case-film-kicker">THE MOMENT IT BECAME REAL</span>
+          <button class="case-film-toggle" id="carnival-film-toggle" type="button" aria-label="Play Carnival film">Play film ▶</button>
+        </div>
+        <figcaption class="case-film-caption"><span>RIO DE JANEIRO, BRAZIL</span><span>10 SECONDS OF CARNIVAL</span></figcaption>
+      </figure>
+
       <div class="case-quote" aria-label="The journey's defining contrast">
         <span>THE CONTRAST</span>
         <p>From the rhythm of Carnival<br>to the silence of Patagonia.</p>
@@ -111,6 +123,65 @@
       </div>
     </section>
   </main>
+
+  <script>
+    (() => {
+      const film = document.getElementById("carnival-film");
+      const toggle = document.getElementById("carnival-film-toggle");
+      const source = film?.querySelector("source");
+      if (!film || !toggle || !source) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let hasLoaded = false;
+      let userPaused = false;
+
+      function loadFilm() {
+        if (hasLoaded) return;
+        source.src = source.dataset.src;
+        film.load();
+        hasLoaded = true;
+      }
+
+      function updateButton() {
+        toggle.textContent = film.paused ? "Play film ▶" : "Pause film ❚❚";
+        toggle.setAttribute("aria-label", film.paused ? "Play Carnival film" : "Pause Carnival film");
+      }
+
+      function playFilm() {
+        loadFilm();
+        const request = film.play();
+        if (request) request.catch(updateButton);
+      }
+
+      toggle.addEventListener("click", () => {
+        if (film.paused) {
+          userPaused = false;
+          playFilm();
+        } else {
+          userPaused = true;
+          film.pause();
+        }
+        updateButton();
+      });
+      film.addEventListener("play", updateButton);
+      film.addEventListener("pause", updateButton);
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting) {
+            loadFilm();
+            if (!reducedMotion.matches && !userPaused) playFilm();
+          } else if (!film.paused) {
+            film.pause();
+          }
+        }, { threshold: 0.2 });
+        observer.observe(film);
+      } else {
+        loadFilm();
+        if (!reducedMotion.matches) playFilm();
+      }
+    })();
+  </script>
 
   <footer class="case-footer"><span>FROM CARNIVAL TO THE END OF THE WORLD</span><span>PORTFOLIO 01 / SOUTH AMERICA</span></footer>
 </body>
