@@ -429,3 +429,32 @@ h1 {
   .case-landscape-image { aspect-ratio: 4 / 3; }
   .case-landscape figcaption { font-size: .61rem; }
 }
+
+/* Montevideo photograph inside the Uruguay route chapter */
+.case-route-photo {
+  margin: clamp(28px, 4vw, 55px) 0 4px;
+  width: 100%;
+}
+.case-route-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 620px;
+  object-fit: contain;
+  background: #26312c;
+}
+.case-route-photo figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 22px;
+  margin-top: 13px;
+  font-size: .63rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  line-height: 1.7;
+  color: #d9bb90;
+}
+@media (max-width: 600px) {
+  .case-route-photo figcaption { font-size: .59rem; }
+}
