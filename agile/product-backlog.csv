@@ -1,0 +1,11 @@
+ID,Epic,User story,Priority,Proposed increment,Acceptance criteria,Evidence status
+PB-01,Carnival,"As a traveler I want the Carnival experience protected so the principal goal is achieved",P0,0-3,"Carnival date anchors route and Rio stay",Route documented
+PB-02,Route,"As Product Owner I want a feasible four-country sequence so time is spent on experiences not unnecessary transfers",P0,0-1,"Four countries and overnight bases fit five-week journey",Route documented
+PB-03,Readiness,"As a traveler I want critical travel requirements and bookings resolved so disruptions are reduced",P0,2,"Entry requirements and essential legs checked",Recommended planning artifact
+PB-04,Rio,"As a traveler I want meaningful time beyond Carnival so I experience the city",P1,3,"Christ the Redeemer and Ipanema included with flexible time",Photographic evidence
+PB-05,Uruguay,"As a traveler I want Montevideo and Punta del Este with minimal hotel changes",P1,4,"Montevideo base and Punta day trip by bus",Route documented
+PB-06,Argentina,"As a traveler I want Buenos Aires and Ushuaia sequenced effectively",P1,4-5,"Split Buenos Aires stays around Ushuaia",Route documented
+PB-07,Patagonia,"As a traveler I want Laguna Esmeralda and Beagle Channel experiences",P1,5,"Hike and channel journey included subject to conditions",Portfolio narrative and photos
+PB-08,Waterfalls,"As a traveler I want Iguazú and a Paraguay day trip before returning to Brazil",P1,5,"Ciudad del Este as day trip and final São Paulo base",Route documented
+PB-09,Resilience,"As Product Owner I want alternatives for critical connections and weather",P1,1-5,"Critical dependencies and responses identified",Retrospective proposal
+PB-10,Evidence,"As a portfolio reader I want clear proof of route choices and product thinking",P2,6,"Story backlog sprints and photo links accessible",Published case study
