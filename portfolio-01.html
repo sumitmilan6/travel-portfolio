@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111616">
   <meta name="description" content="From Carnival to the End of the World: a five-week, four-country South American journey designed around a childhood dream of Brazilian Carnival.">
   <title>From Carnival to the End of the World | Portfolio 01</title>
-  <link rel="stylesheet" href="styles.css?v=portfolio01-uruguay-slider-20261004">
+  <link rel="stylesheet" href="styles.css?v=portfolio01-uruguay-stories-20261004">
 </head>
 <body class="case-page">
   <a class="case-skip" href="#story">Skip to the story</a>
@@ -83,25 +83,41 @@
         <li><span class="case-stop-num">01</span><div><span class="case-country">BRAZIL / 3 NIGHTS</span><h3>São Paulo</h3><p>The opening chapter: Carnival, city energy and the beginning of a long-held dream.</p></div><span class="case-stop-tag">START</span></li>
         <li><span class="case-stop-num">02</span><div><span class="case-country">BRAZIL / 12 DAYS</span><h3>Rio de Janeiro</h3><p>The heart of the trip: Carnival celebrations, iconic scenery and time to experience the city beyond the festivities.</p></div><span class="case-stop-tag">CARNIVAL</span></li>
         <li><span class="case-stop-num">03</span><div><span class="case-country">URUGUAY / 3 DAYS</span><h3>Montevideo <span class="case-inline-stop">+ Punta del Este</span></h3><p>A change of pace, with a day trip along the coast to Punta del Este.</p>
-          <div class="case-uruguay-gallery" role="region" aria-roledescription="carousel" aria-label="Montevideo and Punta del Este photo gallery">
-            <div class="case-uruguay-viewport" id="uruguay-photos" tabindex="0" aria-label="Swipe or scroll horizontally to view both Uruguay photographs">
-              <figure class="case-route-photo" aria-label="Photo 1 of 2: Montevideo">
-                <img src="montevideo.jpg" alt="Travel photograph from Montevideo, Uruguay" loading="lazy" decoding="async">
-                <figcaption><span>MONTEVIDEO, URUGUAY</span><span>THE CAPITAL</span></figcaption>
-              </figure>
-              <figure class="case-route-photo" aria-label="Photo 2 of 2: Punta del Este">
-                <img src="punta-del-este.jpg" alt="Travel photograph from Punta del Este, Uruguay" loading="lazy" decoding="async">
-                <figcaption><span>PUNTA DEL ESTE, URUGUAY</span><span>THE COASTAL DAY TRIP</span></figcaption>
-              </figure>
-            </div>
-            <div class="case-gallery-controls" aria-label="Photo navigation">
-              <button class="case-gallery-arrow" type="button" data-gallery-prev aria-label="Previous Uruguay photograph" disabled>←</button>
-              <div class="case-gallery-dots" aria-label="Choose a photograph">
-                <button class="case-gallery-dot is-current" type="button" data-gallery-index="0" aria-label="Show Montevideo photograph" aria-current="true"></button>
-                <button class="case-gallery-dot" type="button" data-gallery-index="1" aria-label="Show Punta del Este photograph"></button>
+          <div class="case-uruguay-gallery" role="region" aria-roledescription="carousel" aria-label="Montevideo and Punta del Este photo stories">
+            <div class="case-gallery-media">
+              <div class="case-uruguay-viewport" id="uruguay-photos" tabindex="0" aria-label="Swipe or scroll horizontally to view both Uruguay photographs">
+                <figure class="case-route-photo" aria-label="Photo 1 of 2: Montevideo">
+                  <img src="montevideo.jpg" alt="Travel photograph from Montevideo, Uruguay" loading="lazy" decoding="async">
+                  <figcaption><span>MONTEVIDEO, URUGUAY</span><span>THE CAPITAL</span></figcaption>
+                </figure>
+                <figure class="case-route-photo" aria-label="Photo 2 of 2: Punta del Este">
+                  <img src="punta-del-este.jpg" alt="Travel photograph from Punta del Este, Uruguay" loading="lazy" decoding="async">
+                  <figcaption><span>PUNTA DEL ESTE, URUGUAY</span><span>THE COASTAL DAY TRIP</span></figcaption>
+                </figure>
               </div>
-              <span class="case-gallery-count" aria-live="polite"><span id="uruguay-current">01</span> / 02</span>
-              <button class="case-gallery-arrow" type="button" data-gallery-next aria-label="Next Uruguay photograph">→</button>
+              <div class="case-gallery-controls" aria-label="Photo navigation">
+                <button class="case-gallery-arrow" type="button" data-gallery-prev aria-label="Previous Uruguay photograph" disabled>←</button>
+                <div class="case-gallery-dots" aria-label="Choose a photograph">
+                  <button class="case-gallery-dot is-current" type="button" data-gallery-index="0" aria-label="Show Montevideo photograph" aria-current="true"></button>
+                  <button class="case-gallery-dot" type="button" data-gallery-index="1" aria-label="Show Punta del Este photograph"></button>
+                </div>
+                <span class="case-gallery-count" aria-live="polite"><span id="uruguay-current">01</span> / 02</span>
+                <button class="case-gallery-arrow" type="button" data-gallery-next aria-label="Next Uruguay photograph">→</button>
+              </div>
+            </div>
+            <div class="case-gallery-story" aria-live="polite" aria-atomic="true">
+              <article data-gallery-story="0">
+                <p class="case-gallery-eyebrow">01 / URUGUAY'S CAPITAL</p>
+                <h4>After Carnival,<br><em>a slower rhythm.</em></h4>
+                <p>After the energy of São Paulo and Rio, Montevideo offered a change of pace. Spending three days in Uruguay created space for the capital and its coastline before the journey continued to Argentina.</p>
+                <p class="case-gallery-detail">THE DESIGN DECISION <span>One base, two very different sides of Uruguay.</span></p>
+              </article>
+              <article data-gallery-story="1" hidden>
+                <p class="case-gallery-eyebrow">02 / A COASTAL DAY TRIP</p>
+                <h4>The coast,<br><em>without moving hotels.</em></h4>
+                <p>Punta del Este was a day trip from Montevideo, reached by intercity bus. It brought a contrasting coastal chapter to the itinerary without adding another overnight stop or packing day.</p>
+                <p class="case-gallery-detail">THE DESIGN DECISION <span>A return bus journey made the coast part of the trip while keeping the route simple.</span></p>
+              </article>
             </div>
           </div>
         </div><span class="case-stop-tag">COAST</span></li>
@@ -229,6 +245,7 @@
       const next = gallery.querySelector("[data-gallery-next]");
       const dots = Array.from(gallery.querySelectorAll("[data-gallery-index]"));
       const currentLabel = document.getElementById("uruguay-current");
+      const stories = Array.from(gallery.querySelectorAll("[data-gallery-story]"));
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let active = 0;
 
@@ -237,6 +254,7 @@
         prev.disabled = active === 0;
         next.disabled = active === slides.length - 1;
         currentLabel.textContent = String(active + 1).padStart(2, "0");
+        stories.forEach((story, i) => { story.hidden = i !== active; });
         dots.forEach((dot, i) => {
           dot.classList.toggle("is-current", i === active);
           if (i === active) dot.setAttribute("aria-current", "true");
