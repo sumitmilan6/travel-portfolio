@@ -724,3 +724,61 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   .case-rio-viewport { scroll-behavior: auto; }
 }
+
+/* Ushuaia photo chapter — borderless image and accompanying story. */
+.case-ushuaia-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(25px, 4vw, 60px);
+  margin-top: clamp(32px, 4.5vw, 62px);
+  min-width: 0;
+}
+.case-ushuaia-photo { margin: 0; min-width: 0; }
+.case-ushuaia-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  background: transparent;
+}
+.case-ushuaia-photo figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 18px;
+  margin-top: 14px;
+  font-size: .63rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.6;
+  color: #d9bb90;
+}
+.case-ushuaia-story { min-width: 0; }
+.case-ushuaia-eyebrow {
+  display: block;
+  margin-bottom: clamp(18px, 2.4vw, 32px);
+  color: #d9bb90;
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+.case-route-list .case-ushuaia-story h4 {
+  margin-bottom: clamp(18px, 2.4vw, 30px);
+  font: normal clamp(2rem, 3.2vw, 3.8rem)/1.07 Georgia, "Times New Roman", serif;
+  letter-spacing: -.04em;
+  color: #f0eee8;
+}
+.case-ushuaia-story h4 em { color: #d9bb90; }
+.case-route-list .case-ushuaia-story p {
+  max-width: 39ch;
+  font-size: clamp(.95rem, 1.2vw, 1.06rem);
+  line-height: 1.85;
+  color: #cbd3c9;
+}
+@media (max-width: 960px) {
+  .case-ushuaia-feature { grid-template-columns: 1fr; gap: 30px; }
+  .case-ushuaia-story { max-width: 620px; }
+}
