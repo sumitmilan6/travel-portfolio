@@ -459,27 +459,85 @@ h1 {
   .case-route-photo figcaption { font-size: .59rem; }
 }
 
-/* Two stops in Uruguay: city and coast */
+/* Uruguay carousel: one photo at a time, swipeable on touch screens. */
 .case-uruguay-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2.5vw, 30px);
   margin-top: clamp(28px, 4vw, 55px);
-}
-.case-uruguay-gallery .case-route-photo {
-  margin: 0;
   min-width: 0;
 }
-.case-uruguay-gallery .case-route-photo img {
-  aspect-ratio: 4 / 5;
-  height: auto;
-  object-fit: cover;
+.case-uruguay-viewport {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
+}
+.case-uruguay-viewport::-webkit-scrollbar { display: none; }
+.case-uruguay-viewport:focus-visible { outline: 2px solid #e8c58c; outline-offset: 5px; }
+.case-uruguay-viewport .case-route-photo {
+  flex: 0 0 100%;
+  min-width: 0;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.case-uruguay-viewport .case-route-photo img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 42vw, 550px);
+  max-height: none;
+  object-fit: contain;
+  background: #26312c;
+}
+.case-gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 19px;
+}
+.case-gallery-arrow {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  color: #e9e6df;
+  background: transparent;
+  border: 1px solid rgba(233,230,223,.52);
+  border-radius: 50%;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+.case-gallery-arrow:hover:not(:disabled) { color: #17211e; background: #e9e6df; }
+.case-gallery-arrow:disabled { opacity: .3; cursor: default; }
+.case-gallery-arrow:focus-visible, .case-gallery-dot:focus-visible {
+  outline: 2px solid #e8c58c;
+  outline-offset: 4px;
+}
+.case-gallery-dots { display: flex; gap: 10px; align-items: center; margin: 0 4px; }
+.case-gallery-dot {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: #7a8980;
+  cursor: pointer;
+  padding: 0;
+}
+.case-gallery-dot.is-current { background: #e8c58c; width: 10px; height: 10px; }
+.case-gallery-count {
+  font-size: .68rem;
+  letter-spacing: .15em;
+  color: #e8c58c;
+  white-space: nowrap;
 }
 @media (max-width: 650px) {
-  .case-uruguay-gallery { grid-template-columns: 1fr; gap: 35px; }
-  .case-uruguay-gallery .case-route-photo img {
-    aspect-ratio: auto;
-    max-height: none;
-    object-fit: contain;
+  .case-uruguay-viewport .case-route-photo img {
+    height: min(72vw, 440px);
   }
+  .case-gallery-controls { justify-content: space-between; gap: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-uruguay-viewport { scroll-behavior: auto; }
 }
