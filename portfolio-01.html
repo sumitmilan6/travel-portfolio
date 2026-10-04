@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111616">
   <meta name="description" content="From Carnival to the End of the World: a five-week, four-country South American journey designed around a childhood dream of Brazilian Carnival.">
   <title>From Carnival to the End of the World | Portfolio 01</title>
-  <link rel="stylesheet" href="styles.css?v=portfolio01-argentina-clean-20261004">
+  <link rel="stylesheet" href="styles.css?v=portfolio01-rio-gallery-20261004">
 </head>
 <body class="case-page">
   <a class="case-skip" href="#story">Skip to the story</a>
@@ -58,14 +58,49 @@
         <figcaption class="case-film-caption"><span>RIO DE JANEIRO, BRAZIL</span><span>10 SECONDS OF CARNIVAL</span></figcaption>
       </figure>
 
-      <figure class="case-landscape">
+      <section class="case-landscape" aria-label="Rio de Janeiro landscape gallery">
         <div class="case-landscape-heading">
           <span>BEYOND THE CELEBRATIONS</span>
           <p>Rio, in a different light.</p>
         </div>
-        <img class="case-landscape-image" src="rio-landscape.JPG" alt="Landscape photograph from Rio de Janeiro, Brazil" loading="lazy" decoding="async">
-        <figcaption><span>RIO DE JANEIRO, BRAZIL</span><span>BEYOND CARNIVAL</span></figcaption>
-      </figure>
+        <div class="case-rio-gallery" role="region" aria-roledescription="carousel" aria-label="Two views of Rio de Janeiro">
+          <div class="case-rio-media">
+            <div class="case-rio-viewport" id="rio-photos" tabindex="0" aria-label="Swipe or use arrows to see both Rio photographs">
+              <figure class="case-rio-slide">
+                <img src="rio-landscape.JPG" alt="Landscape photograph of Rio de Janeiro" loading="lazy" decoding="async">
+                <figcaption><span>RIO DE JANEIRO, BRAZIL</span><span>BEYOND CARNIVAL</span></figcaption>
+              </figure>
+              <figure class="case-rio-slide">
+                <img src="rio-christ-redeemer-view.jpeg" alt="Panoramic view over Rio de Janeiro from Christ the Redeemer" loading="lazy" decoding="async">
+                <figcaption><span>FROM CHRIST THE REDEEMER</span><span>A PANORAMIC VIEW</span></figcaption>
+              </figure>
+            </div>
+            <div class="case-rio-controls" aria-label="Rio photo navigation">
+              <button class="case-rio-arrow" type="button" data-rio-prev aria-label="Previous Rio photograph" disabled>←</button>
+              <div class="case-rio-dots">
+                <button class="case-rio-dot is-current" type="button" data-rio-index="0" aria-label="Show Rio landscape" aria-current="true"></button>
+                <button class="case-rio-dot" type="button" data-rio-index="1" aria-label="Show view from Christ the Redeemer"></button>
+              </div>
+              <span class="case-rio-count" aria-live="polite"><span id="rio-current">01</span> / 02</span>
+              <button class="case-rio-arrow" type="button" data-rio-next aria-label="Next Rio photograph">→</button>
+            </div>
+          </div>
+          <div class="case-rio-story" aria-live="polite" aria-atomic="true">
+            <article data-rio-story="0">
+              <p class="case-rio-eyebrow">01 / THE CITY BEYOND CARNIVAL</p>
+              <h3>A city worth<br><em>slowing down for.</em></h3>
+              <p>With twelve days in Rio, there was room to experience more than the celebrations. The city's dramatic landscape was part of the dream, too.</p>
+              <p class="case-rio-note">THE JOURNEY <span>Giving Carnival the time it deserved also created space to discover Rio itself.</span></p>
+            </article>
+            <article data-rio-story="1" hidden>
+              <p class="case-rio-eyebrow">02 / CHRIST THE REDEEMER</p>
+              <h3>Rio from<br><em>above.</em></h3>
+              <p>A breathtaking panorama from Christ the Redeemer reveals the scale of the city and its remarkable setting between mountains and the coast.</p>
+              <p class="case-rio-note">THE EXPERIENCE <span>From the energy of street celebrations to one of Rio's most unforgettable viewpoints.</span></p>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <div class="case-quote" aria-label="The journey's defining contrast">
         <span>THE CONTRAST</span>
@@ -175,6 +210,63 @@
       </div>
     </section>
   </main>
+
+
+  <script>
+    (() => {
+      const viewport = document.getElementById("rio-photos");
+      const gallery = viewport?.closest(".case-rio-gallery");
+      if (!viewport || !gallery) return;
+      const slides = Array.from(viewport.querySelectorAll(".case-rio-slide"));
+      const prev = gallery.querySelector("[data-rio-prev]");
+      const next = gallery.querySelector("[data-rio-next]");
+      const dots = Array.from(gallery.querySelectorAll("[data-rio-index]"));
+      const stories = Array.from(gallery.querySelectorAll("[data-rio-story]"));
+      const counter = document.getElementById("rio-current");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let active = 0;
+      let scrollFrame = 0;
+
+      function setActive(index) {
+        active = Math.max(0, Math.min(slides.length - 1, index));
+        prev.disabled = active === 0;
+        next.disabled = active === slides.length - 1;
+        counter.textContent = String(active + 1).padStart(2, "0");
+        stories.forEach((story, i) => { story.hidden = i !== active; });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-current", i === active);
+          if (i === active) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+      }
+
+      function show(index) {
+        const target = Math.max(0, Math.min(slides.length - 1, index));
+        viewport.scrollTo({
+          left: target * viewport.clientWidth,
+          behavior: reducedMotion.matches ? "instant" : "smooth"
+        });
+        setActive(target);
+      }
+
+      prev.addEventListener("click", () => show(active - 1));
+      next.addEventListener("click", () => show(active + 1));
+      dots.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
+      viewport.addEventListener("keydown", event => {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault();
+          show(active + (event.key === "ArrowRight" ? 1 : -1));
+        }
+      });
+      viewport.addEventListener("scroll", () => {
+        if (scrollFrame) cancelAnimationFrame(scrollFrame);
+        scrollFrame = requestAnimationFrame(() => {
+          if (viewport.clientWidth) setActive(Math.round(viewport.scrollLeft / viewport.clientWidth));
+        });
+      }, { passive: true });
+      setActive(0);
+    })();
+  </script>
 
   <script>
     (() => {
