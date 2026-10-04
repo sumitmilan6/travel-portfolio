@@ -580,3 +580,15 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   .case-uruguay-viewport { scroll-behavior: auto; }
 }
+
+/* Buenos Aires: same border-free, edge-to-edge framing as Uruguay. */
+.case-buenos-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  max-height: none;
+  object-fit: cover;
+  object-position: center;
+  background: transparent;
+}
