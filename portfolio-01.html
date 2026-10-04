@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111616">
   <meta name="description" content="From Carnival to the End of the World: a five-week, four-country South American journey designed around a childhood dream of Brazilian Carnival.">
   <title>From Carnival to the End of the World | Portfolio 01</title>
-  <link rel="stylesheet" href="styles.css?v=portfolio01-punta-20261003">
+  <link rel="stylesheet" href="styles.css?v=portfolio01-uruguay-slider-20261004">
 </head>
 <body class="case-page">
   <a class="case-skip" href="#story">Skip to the story</a>
@@ -83,15 +83,26 @@
         <li><span class="case-stop-num">01</span><div><span class="case-country">BRAZIL / 3 NIGHTS</span><h3>São Paulo</h3><p>The opening chapter: Carnival, city energy and the beginning of a long-held dream.</p></div><span class="case-stop-tag">START</span></li>
         <li><span class="case-stop-num">02</span><div><span class="case-country">BRAZIL / 12 DAYS</span><h3>Rio de Janeiro</h3><p>The heart of the trip: Carnival celebrations, iconic scenery and time to experience the city beyond the festivities.</p></div><span class="case-stop-tag">CARNIVAL</span></li>
         <li><span class="case-stop-num">03</span><div><span class="case-country">URUGUAY / 3 DAYS</span><h3>Montevideo <span class="case-inline-stop">+ Punta del Este</span></h3><p>A change of pace, with a day trip along the coast to Punta del Este.</p>
-          <div class="case-uruguay-gallery">
-            <figure class="case-route-photo">
-              <img src="montevideo.jpg" alt="Travel photograph from Montevideo, Uruguay" loading="lazy" decoding="async">
-              <figcaption><span>MONTEVIDEO, URUGUAY</span><span>THE CAPITAL</span></figcaption>
-            </figure>
-            <figure class="case-route-photo">
-              <img src="punta-del-este.jpg" alt="Travel photograph from Punta del Este, Uruguay" loading="lazy" decoding="async">
-              <figcaption><span>PUNTA DEL ESTE, URUGUAY</span><span>THE COASTAL DAY TRIP</span></figcaption>
-            </figure>
+          <div class="case-uruguay-gallery" role="region" aria-roledescription="carousel" aria-label="Montevideo and Punta del Este photo gallery">
+            <div class="case-uruguay-viewport" id="uruguay-photos" tabindex="0" aria-label="Swipe or scroll horizontally to view both Uruguay photographs">
+              <figure class="case-route-photo" aria-label="Photo 1 of 2: Montevideo">
+                <img src="montevideo.jpg" alt="Travel photograph from Montevideo, Uruguay" loading="lazy" decoding="async">
+                <figcaption><span>MONTEVIDEO, URUGUAY</span><span>THE CAPITAL</span></figcaption>
+              </figure>
+              <figure class="case-route-photo" aria-label="Photo 2 of 2: Punta del Este">
+                <img src="punta-del-este.jpg" alt="Travel photograph from Punta del Este, Uruguay" loading="lazy" decoding="async">
+                <figcaption><span>PUNTA DEL ESTE, URUGUAY</span><span>THE COASTAL DAY TRIP</span></figcaption>
+              </figure>
+            </div>
+            <div class="case-gallery-controls" aria-label="Photo navigation">
+              <button class="case-gallery-arrow" type="button" data-gallery-prev aria-label="Previous Uruguay photograph" disabled>←</button>
+              <div class="case-gallery-dots" aria-label="Choose a photograph">
+                <button class="case-gallery-dot is-current" type="button" data-gallery-index="0" aria-label="Show Montevideo photograph" aria-current="true"></button>
+                <button class="case-gallery-dot" type="button" data-gallery-index="1" aria-label="Show Punta del Este photograph"></button>
+              </div>
+              <span class="case-gallery-count" aria-live="polite"><span id="uruguay-current">01</span> / 02</span>
+              <button class="case-gallery-arrow" type="button" data-gallery-next aria-label="Next Uruguay photograph">→</button>
+            </div>
           </div>
         </div><span class="case-stop-tag">COAST</span></li>
         <li><span class="case-stop-num">04</span><div><span class="case-country">ARGENTINA / 3 DAYS</span><h3>Buenos Aires</h3><p>Arriving from Uruguay by bus and ferry via Colonia del Sacramento.</p>
@@ -205,6 +216,62 @@
         loadFilm();
         if (!reducedMotion.matches) playFilm();
       }
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const viewport = document.getElementById("uruguay-photos");
+      const gallery = viewport?.closest(".case-uruguay-gallery");
+      if (!viewport || !gallery) return;
+      const slides = Array.from(viewport.querySelectorAll(".case-route-photo"));
+      const prev = gallery.querySelector("[data-gallery-prev]");
+      const next = gallery.querySelector("[data-gallery-next]");
+      const dots = Array.from(gallery.querySelectorAll("[data-gallery-index]"));
+      const currentLabel = document.getElementById("uruguay-current");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let active = 0;
+
+      function updateControls(index) {
+        active = Math.max(0, Math.min(slides.length - 1, index));
+        prev.disabled = active === 0;
+        next.disabled = active === slides.length - 1;
+        currentLabel.textContent = String(active + 1).padStart(2, "0");
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-current", i === active);
+          if (i === active) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+      }
+
+      function show(index) {
+        const target = Math.max(0, Math.min(slides.length - 1, index));
+        viewport.scrollTo({
+          left: target * viewport.clientWidth,
+          behavior: reducedMotion.matches ? "instant" : "smooth"
+        });
+        updateControls(target);
+      }
+
+      prev.addEventListener("click", () => show(active - 1));
+      next.addEventListener("click", () => show(active + 1));
+      dots.forEach((dot, index) => dot.addEventListener("click", () => show(index)));
+      viewport.addEventListener("keydown", event => {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault();
+          show(active + (event.key === "ArrowRight" ? 1 : -1));
+        }
+      });
+      let scrollFrame = 0;
+      viewport.addEventListener("scroll", () => {
+        if (scrollFrame) cancelAnimationFrame(scrollFrame);
+        scrollFrame = requestAnimationFrame(() => {
+          if (viewport.clientWidth) {
+            updateControls(Math.round(viewport.scrollLeft / viewport.clientWidth));
+          }
+        });
+      }, { passive: true });
+      updateControls(0);
     })();
   </script>
 
