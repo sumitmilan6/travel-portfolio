@@ -459,11 +459,16 @@ h1 {
   .case-route-photo figcaption { font-size: .59rem; }
 }
 
-/* Uruguay carousel: one photo at a time, swipeable on touch screens. */
+/* Uruguay: an editorial photo-and-story slider. */
 .case-uruguay-gallery {
-  margin-top: clamp(28px, 4vw, 55px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 68px);
+  margin-top: clamp(32px, 4.5vw, 65px);
   min-width: 0;
 }
+.case-gallery-media, .case-gallery-story { min-width: 0; }
 .case-uruguay-viewport {
   display: flex;
   overflow-x: auto;
@@ -471,7 +476,6 @@ h1 {
   scrollbar-width: none;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
-  min-width: 0;
 }
 .case-uruguay-viewport::-webkit-scrollbar { display: none; }
 .case-uruguay-viewport:focus-visible { outline: 2px solid #e8c58c; outline-offset: 5px; }
@@ -485,23 +489,25 @@ h1 {
 .case-uruguay-viewport .case-route-photo img {
   display: block;
   width: 100%;
-  height: clamp(260px, 42vw, 550px);
+  height: clamp(280px, 36vw, 510px);
   max-height: none;
   object-fit: contain;
+  object-position: center;
   background: #26312c;
 }
 .case-gallery-controls {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 14px;
-  margin-top: 19px;
+  margin-top: 20px;
 }
 .case-gallery-arrow {
   display: grid;
   place-items: center;
   width: 43px;
   height: 43px;
+  flex: 0 0 43px;
   color: #e9e6df;
   background: transparent;
   border: 1px solid rgba(233,230,223,.52);
@@ -515,28 +521,62 @@ h1 {
   outline: 2px solid #e8c58c;
   outline-offset: 4px;
 }
-.case-gallery-dots { display: flex; gap: 10px; align-items: center; margin: 0 4px; }
+.case-gallery-dots { display: flex; align-items: center; gap: 10px; margin: 0 4px; }
 .case-gallery-dot {
-  width: 8px;
-  height: 8px;
-  border: 0;
-  border-radius: 50%;
-  background: #7a8980;
-  cursor: pointer;
-  padding: 0;
+  width: 8px; height: 8px; padding: 0;
+  border: 0; border-radius: 50%;
+  background: #7a8980; cursor: pointer;
 }
-.case-gallery-dot.is-current { background: #e8c58c; width: 10px; height: 10px; }
-.case-gallery-count {
-  font-size: .68rem;
-  letter-spacing: .15em;
-  color: #e8c58c;
-  white-space: nowrap;
+.case-gallery-dot.is-current { width: 10px; height: 10px; background: #e8c58c; }
+.case-gallery-count { font-size: .68rem; letter-spacing: .15em; color: #e8c58c; white-space: nowrap; }
+.case-gallery-story { padding: 14px 0 18px; }
+.case-gallery-story [hidden] { display: none !important; }
+.case-gallery-eyebrow {
+  font-size: .68rem !important;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: #d9bb90 !important;
+  margin-bottom: clamp(16px, 2.5vw, 32px);
+}
+.case-page .case-gallery-story h4 {
+  margin-bottom: clamp(18px, 2.5vw, 30px);
+  font: normal clamp(2rem, 3.2vw, 3.8rem)/1.08 Georgia, "Times New Roman", serif;
+  letter-spacing: -.04em;
+  color: #f0eee8;
+}
+.case-gallery-story h4 em { color: #d9bb90; }
+.case-gallery-story article > p:not(.case-gallery-eyebrow):not(.case-gallery-detail) {
+  font-size: clamp(.96rem, 1.25vw, 1.07rem);
+  line-height: 1.9;
+  color: #cbd3c9;
+}
+.case-gallery-detail {
+  margin-top: clamp(28px, 3.5vw, 48px);
+  padding-top: 19px;
+  border-top: 1px solid rgba(233,230,223,.3);
+  color: #d9bb90 !important;
+  font-size: .67rem !important;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.8;
+}
+.case-gallery-detail span {
+  display: block;
+  margin-top: 9px;
+  font-size: .9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.6;
+  color: #e5e7df;
+}
+@media (max-width: 960px) {
+  .case-uruguay-gallery { grid-template-columns: 1fr; gap: 32px; }
+  .case-uruguay-viewport .case-route-photo img { height: clamp(290px, 52vw, 520px); }
+  .case-gallery-story { max-width: 650px; }
 }
 @media (max-width: 650px) {
-  .case-uruguay-viewport .case-route-photo img {
-    height: min(72vw, 440px);
-  }
-  .case-gallery-controls { justify-content: space-between; gap: 9px; }
+  .case-uruguay-viewport .case-route-photo img { height: min(76vw, 440px); }
+  .case-gallery-controls { justify-content: flex-start; gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .case-uruguay-viewport { scroll-behavior: auto; }
